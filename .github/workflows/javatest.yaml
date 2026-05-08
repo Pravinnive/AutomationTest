@@ -31,7 +31,7 @@ jobs:
           subject: Automation Test Report
 
           to: pravinjayaraj06@gmail.com
-          from: Github Actions
+          from: ${{ secrets.MAIL_USERNAME }}
 
           html_body: file://target/surefire-reports/emailable-report.html
 
