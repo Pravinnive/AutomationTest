@@ -34,7 +34,7 @@ public class FakeAPITest {
     @Test
     public void testFilterProductsByPrice() {
         RestAssured.given()
-                .queryParam("price", 100)
+                .queryParam("price", 100)  //A query parameter is the part after ? in a URL.
                 .when()
                 .get("/products/")
                 .then()
@@ -100,6 +100,25 @@ public class FakeAPITest {
                 .statusCode(200)
                 .body("id", Matchers.equalTo(1));
     }
-
+    @Test
+    public void testCreateCategories(){
+        String name = "nive_" + System.currentTimeMillis();
+        String body = """
+                {
+                    "name": "%s",
+                    "image": "https://placeimg.com/640/480/any"
+                }
+                """.formatted(name);
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(body)
+                .when()
+                .post("/categories")
+                .then()
+                .log().all()
+                .statusCode(201)
+                .body("name",Matchers.equalTo(name))
+                .body("image",Matchers.equalTo("https://placeimg.com/640/480/any"));
+    }
 
 }
